@@ -68,7 +68,7 @@ export default function ListUsers() {
           <Text fontSize="28px" fontWeight="bold">
             {countData}
           </Text>{' '}
-          Mulheres cadastradas <Text>com sucesso! ✅</Text>
+          Mulheres cadastradas <Text>com sucesso!! ✅</Text>
         </Text>
         <Flex align="center" justify="center" mx="auto">
           <Table color="white" mt="2rem" size="sm">
