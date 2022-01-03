@@ -1,0 +1,49 @@
+strong {
+  color: #912b78;
+}
+
+div.css-g2t4tb {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.67);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8.7px);
+  -webkit-backdrop-filter: blur(8.7px);
+  border: 1px solid rgba(255, 255, 255, 0.41);
+}
+
+span.wave {
+  animation-name: wave-animation !important; /* Refers to the name of your @keyframes element below */
+  animation-duration: 2.5s !important; /* Change to speed up or slow down */
+  animation-iteration-count: infinite !important; /* Never stop waving :) */
+  transform-origin: 70% 70% !important; /* Pivot around the bottom-left palm */
+  display: inline-block !important;
+  margin-right: 0.2rem;
+}
+
+@keyframes wave-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(14deg);
+  } /* The following five values can be played with to make the waving more or less extreme */
+  20% {
+    transform: rotate(-8deg);
+  }
+  30% {
+    transform: rotate(14deg);
+  }
+  40% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  } /* Reset for the last half to pause */
+  100% {
+    transform: rotate(0deg);
+  }
+}
