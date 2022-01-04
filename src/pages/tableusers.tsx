@@ -93,153 +93,151 @@ export default function ListUsers() {
       >
         <Flex align="center" justify="center" mx="auto">
           <Table color="white" mt="2rem" size="sm">
+            <Thead>
+              <Tr>
+                <Th color="white">Nome</Th>
+                <Th color="white">Email</Th>
+                <Th color="white">WhatsApp</Th>
+                <Th color="white">CPF</Th>
+                <Th color="white">Nascimento</Th>
+                <Th color="white">Bairro</Th>
+                <Th color="white">Instagram</Th>
+                <Th color="white">Eleições</Th>
+                <Th color="white">Ano</Th>
+                <Th color="white">Cargo</Th>
+                <Th color="white">Partido</Th>
+                <Th color="white">Líder comunitária</Th>
+                <Th color="white">Organização</Th>
+                <Th color="white">Cargo de Org</Th>
+                <Th color="white">Filiada</Th>
+                <Th color="white">Partido</Th>
+                <Th color="white">Raça</Th>
+                <Th color="white">Identidade</Th>
+              </Tr>
+            </Thead>
             {loading ? (
-              <>
-                <Thead>
-                  <Tr>
-                    {<Th color="white">Nome</Th>}
-                    <Th color="white">Email</Th>
-                    <Th color="white">WhatsApp</Th>
-                    <Th color="white">CPF</Th>
-                    <Th color="white">Nascimento</Th>
-                    <Th color="white">Bairro</Th>
-                    <Th color="white">Instagram</Th>
-                    <Th color="white">Eleições</Th>
-                    <Th color="white">Ano</Th>
-                    <Th color="white">Cargo</Th>
-                    <Th color="white">Partido</Th>
-                    <Th color="white">Líder comunitária</Th>
-                    <Th color="white">Organização</Th>
-                    <Th color="white">Cargo de Org</Th>
-                    <Th color="white">Filiada</Th>
-                    <Th color="white">Partido</Th>
-                    <Th color="white">Raça</Th>
-                    <Th color="white">Identidade</Th>
-                  </Tr>
-                </Thead>
-                <Stack py="0.5rem" w="100%" mx="auto">
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                  <Skeleton
-                    startColor="pink.500"
-                    endColor="orange.500"
-                    height="20px"
-                    width="2000px"
-                  />
-                </Stack>
-              </>
+              <Stack py="0.5rem" w="100%" mx="auto">
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+                <Skeleton
+                  startColor="pink.500"
+                  endColor="orange.500"
+                  height="20px"
+                  width="2000px"
+                />
+              </Stack>
             ) : (
               faunaData.map(user => (
                 <Tbody>
