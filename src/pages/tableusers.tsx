@@ -35,6 +35,7 @@ export default function ListUsers() {
   const [genrerWhiteData, setGenrerWhiteData] = useState(0);
   const [genrerBlackData, setGenrerBlackData] = useState(0);
   const [genrerYellowData, setGenrerYellowData] = useState(0);
+  const [elections, setElections] = useState(0);
 
   async function getData() {
     setLoading(true);
@@ -90,11 +91,23 @@ export default function ListUsers() {
   );
   console.log('percentual pardas:', percetualYellowWomans);
 
+  async function getDataElections() {
+    setLoading(true);
+    const { data } = await axios.get('/api/getElections');
+    const countElections = await data.length;
+    setElections(countElections);
+    setLoading(false);
+  }
+
+  const percetualElectionsWomans = Math.round((elections * 100) / countData);
+  console.log('percentual cadidatas:', percetualElectionsWomans);
+
   useEffect(() => {
     getData();
     getDataGenrer();
     getDataGenrerBlack();
     getDataGenrerYellow();
+    getDataElections();
   }, []);
   //@ts-ignore
   console.log(faunaData);
@@ -211,7 +224,7 @@ export default function ListUsers() {
           </div> */}
         </Flex>
 
-        <Grid mt="2rem" mx="auto" gap={20} templateColumns="repeat(3, 1fr)">
+        <Grid mt="2rem" mx="auto" gap={20} templateColumns="repeat(4, 1fr)">
           <GridItem>
             <Flex flexDir="column" align="center" justify="center">
               <Text
@@ -274,6 +287,28 @@ export default function ListUsers() {
                 <CircularProgressLabel color="white">
                   {' '}
                   {loading ? <Spinner /> : `${percetualYellowWomans}%`}{' '}
+                </CircularProgressLabel>
+              </CircularProgress>
+            </Flex>
+          </GridItem>
+          <GridItem>
+            <Flex flexDir="column" align="center" justify="center">
+              <Text
+                mb="1rem"
+                color="white"
+                fontWeight="600"
+                fontFamily="Raleway"
+              >
+                👩🏽‍🔧 Mulheres candidatas
+              </Text>
+              <CircularProgress
+                size="100px"
+                value={percetualYellowWomans}
+                color="pink.500"
+              >
+                <CircularProgressLabel color="white">
+                  {' '}
+                  {loading ? <Spinner /> : `${percetualElectionsWomans}%`}{' '}
                 </CircularProgressLabel>
               </CircularProgress>
             </Flex>
