@@ -19,6 +19,8 @@ import {
   SkeletonCircle,
   SkeletonText,
   TableCaption,
+  CircularProgress,
+  CircularProgressLabel,
 } from '@chakra-ui/react';
 
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
@@ -30,19 +32,69 @@ export default function ListUsers() {
   const [loading, setLoading] = useState(false);
   const [faunaData, setFaunaData] = useState([]);
   const [countData, setCountData] = useState(0);
+  const [genrerWhiteData, setGenrerWhiteData] = useState(0);
+  const [genrerBlackData, setGenrerBlackData] = useState(0);
+  const [genrerYellowData, setGenrerYellowData] = useState(0);
 
   async function getData() {
     setLoading(true);
     const { data } = await axios.get('/api/getCustomers');
     const newCount = await data.length;
+
     console.log(newCount);
     setCountData(newCount);
     setFaunaData(data);
     setLoading(false);
   }
 
+  async function getDataGenrer() {
+    setLoading(true);
+    const { data } = await axios.get('/api/getGenrer');
+    const countGenrerWhite = await data.length;
+    setGenrerWhiteData(countGenrerWhite);
+    setLoading(false);
+
+    console.log('brancos quantidade', countGenrerWhite);
+  }
+  //@ts-ignore
+  const percetualWhiteWomans = Number(
+    Math.round((genrerWhiteData * 100) / countData)
+  );
+  console.log('percentual brancos:', percetualWhiteWomans);
+
+  async function getDataGenrerBlack() {
+    setLoading(true);
+    const { data } = await axios.get('/api/getGenrerBlack');
+    const countGenrerBlack = await data.length;
+    setGenrerBlackData(countGenrerBlack);
+    setLoading(false);
+
+    console.log('pretas quantidade', countGenrerBlack);
+  }
+
+  const percetualBlackWomans = Math.round((genrerBlackData * 100) / countData);
+  console.log('percentual pretas:', percetualBlackWomans);
+
+  async function getDataGenrerYellow() {
+    setLoading(true);
+    const { data } = await axios.get('/api/getGenrerYellow');
+    const countGenrerYellow = await data.length;
+    setGenrerYellowData(countGenrerYellow);
+    setLoading(false);
+
+    console.log('pardas quantidade', countGenrerYellow);
+  }
+
+  const percetualYellowWomans = Math.round(
+    (genrerYellowData * 100) / countData
+  );
+  console.log('percentual pardas:', percetualYellowWomans);
+
   useEffect(() => {
     getData();
+    getDataGenrer();
+    getDataGenrerBlack();
+    getDataGenrerYellow();
   }, []);
   //@ts-ignore
   console.log(faunaData);
@@ -68,20 +120,165 @@ export default function ListUsers() {
             Conecta - Mulheres na Política
           </Text>
         </Heading>
-        <Text
-          borderRadius="10px"
-          border="1px solid #fff"
-          p="1rem"
-          mt="2rem"
-          mx="auto"
-          color="white"
-          textAlign={'center'}
-        >
-          <Text fontSize="28px" fontWeight="bold">
-            {loading ? <Spinner /> : countData}
-          </Text>{' '}
-          Mulheres cadastradas <Text>com sucesso!! ✅</Text>
-        </Text>
+        <Flex mx="auto">
+          <div>
+            <Text
+              borderRadius="10px"
+              border="1px solid #fff"
+              p="1rem"
+              mt="2rem"
+              mx="auto"
+              color="white"
+              textAlign={'center'}
+            >
+              <Text fontSize="28px" fontWeight="bold">
+                {loading ? <Spinner /> : countData}
+              </Text>{' '}
+              Mulheres cadastradas <Text>com sucesso!! ✅</Text>
+            </Text>
+          </div>
+
+          {/* <div>
+            <Text
+              borderRadius="10px"
+              border="1px solid #fff"
+              p="1rem"
+              mt="2rem"
+              mx="auto"
+              color="white"
+              textAlign={'center'}
+            >
+              {loading ? (
+                <Spinner />
+              ) : (
+                <Text fontSize="28px" fontWeight="bold">
+                  {' '}
+                  {`${percetualWhiteWomans}%`}{' '}
+                  <Text fontSize="16px" fontWeight={'400'}>
+                    <Text>Mulheres brancas </Text>
+                  </Text>{' '}
+                </Text>
+              )}
+            </Text>
+          </div>
+
+          <div>
+            <Text
+              borderRadius="10px"
+              border="1px solid #fff"
+              p="1rem"
+              mt="2rem"
+              mx="auto"
+              color="white"
+              textAlign={'center'}
+            >
+              {loading ? (
+                <Spinner />
+              ) : (
+                <Text fontSize="28px" fontWeight="bold">
+                  {' '}
+                  {`${percetualBlackWomans}%`}{' '}
+                  <Text fontSize="16px" fontWeight={'400'}>
+                    <Text>Mulheres negras </Text>
+                  </Text>{' '}
+                </Text>
+              )}
+            </Text>
+          </div>
+
+          <div>
+            <Text
+              borderRadius="10px"
+              border="1px solid #fff"
+              p="1rem"
+              mt="2rem"
+              mx="auto"
+              color="white"
+              textAlign={'center'}
+            >
+              {loading ? (
+                <Spinner />
+              ) : (
+                <Text fontSize="28px" fontWeight="bold">
+                  {' '}
+                  {`${percetualYellowWomans}%`}{' '}
+                  <Text fontSize="16px" fontWeight={'400'}>
+                    <Text>Mulheres pardas </Text>
+                  </Text>{' '}
+                </Text>
+              )}
+            </Text>
+          </div> */}
+        </Flex>
+
+        <Grid mt="2rem" mx="auto" gap={20} templateColumns="repeat(3, 1fr)">
+          <GridItem>
+            <Flex flexDir="column" align="center" justify="center">
+              <Text
+                mb="1rem"
+                color="white"
+                fontWeight="600"
+                fontFamily="Raleway"
+              >
+                👱🏻‍♀️ Mulheres brancas
+              </Text>
+              <CircularProgress
+                size="100px"
+                value={percetualWhiteWomans}
+                color="pink.500"
+              >
+                <CircularProgressLabel color="white">
+                  {' '}
+                  {`${percetualWhiteWomans}%`}{' '}
+                </CircularProgressLabel>
+              </CircularProgress>
+            </Flex>
+          </GridItem>
+          <GridItem>
+            <Flex flexDir="column" align="center" justify="center">
+              <Text
+                mb="1rem"
+                color="white"
+                fontWeight="600"
+                fontFamily="Raleway"
+              >
+                👱🏿‍♀️ Mulheres negras
+              </Text>
+              <CircularProgress
+                size="100px"
+                value={percetualBlackWomans}
+                color="pink.500"
+              >
+                <CircularProgressLabel color="white">
+                  {' '}
+                  {`${percetualBlackWomans}%`}{' '}
+                </CircularProgressLabel>
+              </CircularProgress>
+            </Flex>
+          </GridItem>
+          <GridItem>
+            <Flex flexDir="column" align="center" justify="center">
+              <Text
+                mb="1rem"
+                color="white"
+                fontWeight="600"
+                fontFamily="Raleway"
+              >
+                👱🏽‍♀️ Mulheres pardas
+              </Text>
+              <CircularProgress
+                size="100px"
+                value={percetualYellowWomans}
+                color="pink.500"
+              >
+                <CircularProgressLabel color="white">
+                  {' '}
+                  {`${percetualYellowWomans}%`}{' '}
+                </CircularProgressLabel>
+              </CircularProgress>
+            </Flex>
+          </GridItem>
+        </Grid>
       </Flex>
       <Flex
         flexDir="column"
