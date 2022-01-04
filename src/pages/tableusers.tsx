@@ -95,7 +95,9 @@ export default function ListUsers() {
     setLoading(true);
     const { data } = await axios.get('/api/getElections');
     const countElections = await data.length;
+    console.log('quantidade de candidatas:', countElections);
     setElections(countElections);
+    console.log('quantidade cadidatas:', countElections);
     setLoading(false);
   }
 
