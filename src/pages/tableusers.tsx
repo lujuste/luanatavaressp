@@ -97,7 +97,7 @@ export default function ListUsers() {
               <>
                 <Thead>
                   <Tr>
-                    {loading ? <Spinner /> : <Th color="white">Nome</Th>}
+                    {<Th color="white">Nome</Th>}
                     <Th color="white">Email</Th>
                     <Th color="white">WhatsApp</Th>
                     <Th color="white">CPF</Th>
