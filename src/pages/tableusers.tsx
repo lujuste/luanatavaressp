@@ -135,21 +135,32 @@ export default function ListUsers() {
             Conecta - Mulheres na Política
           </Text>
         </Heading>
-        <Flex mx="auto">
+        <Flex p="10" mx="auto">
           <div>
             <Text
               borderRadius="10px"
-              border="1px solid #fff"
-              p="1rem"
-              mt="2rem"
+              p="3rem"
+              bgColor="white"
+              mt="1rem"
               mx="auto"
               color="white"
               textAlign={'center'}
+              boxShadow="2xl"
             >
-              <Text fontSize="28px" fontWeight="bold">
+              <Text color="black" fontSize="38px" fontWeight="bold">
                 {loading ? <Spinner /> : countData}
               </Text>{' '}
-              Mulheres cadastradas <Text>com sucesso!! ✅</Text>
+              <Text
+                fontFamily="Raleway"
+                fontSize="22px"
+                as="span"
+                color="black"
+              >
+                Mulheres cadastradas
+              </Text>{' '}
+              <Text fontFamily="Raleway" fontSize="22px" color="black">
+                com sucesso!! ✅
+              </Text>
             </Text>
           </div>
 
@@ -242,7 +253,7 @@ export default function ListUsers() {
                 value={percetualWhiteWomans}
                 color="pink.500"
               >
-                <CircularProgressLabel color="white">
+                <CircularProgressLabel boxShadow="2xl" color="white">
                   {' '}
                   {loading ? <Spinner /> : `${percetualWhiteWomans}%`}{' '}
                 </CircularProgressLabel>
