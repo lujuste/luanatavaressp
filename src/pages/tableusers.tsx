@@ -229,7 +229,7 @@ export default function ListUsers() {
               >
                 <CircularProgressLabel color="white">
                   {' '}
-                  {`${percetualWhiteWomans}%`}{' '}
+                  {loading ? <Spinner /> : `${percetualWhiteWomans}%`}{' '}
                 </CircularProgressLabel>
               </CircularProgress>
             </Flex>
@@ -251,7 +251,7 @@ export default function ListUsers() {
               >
                 <CircularProgressLabel color="white">
                   {' '}
-                  {`${percetualBlackWomans}%`}{' '}
+                  {loading ? <Spinner /> : `${percetualBlackWomans}%`}{' '}
                 </CircularProgressLabel>
               </CircularProgress>
             </Flex>
@@ -273,7 +273,7 @@ export default function ListUsers() {
               >
                 <CircularProgressLabel color="white">
                   {' '}
-                  {`${percetualYellowWomans}%`}{' '}
+                  {loading ? <Spinner /> : `${percetualYellowWomans}%`}{' '}
                 </CircularProgressLabel>
               </CircularProgress>
             </Flex>
