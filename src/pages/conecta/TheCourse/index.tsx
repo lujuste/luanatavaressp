@@ -59,7 +59,7 @@ export default function TheCourse() {
               fontSize={['28px', '28px', '42px', '50px', '62px']}
               color="#912B78"
               fontWeight="700"
-              fontFamily="Public Sans"
+              fontFamily="Raleway"
               textAlign="center"
               maxW="600px"
               mb={['2rem', '2rem', '0', '0']}
@@ -209,18 +209,16 @@ export default function TheCourse() {
           fontSize={['22px', '22px', '32px', '38px']}
           color="#912B78"
           fontWeight="700"
-          fontFamily="Public Sans"
+          fontFamily="Raleway"
           textAlign="center"
           maxW={['300px', '300px', '860px']}
           mx="auto"
           lineHeight={['32px', '32px', '52px']}
-          mb={['-2rem', '2rem', '0', 0]}
-          mt={['3rem', '2rem', '0', '5rem']}
+          mb={['-2rem', '-1rem', '-1rem', '-2rem']}
+          mt={['3rem', '2rem', '2rem', '4rem']}
         >
           VAMOS ACELERAR A REPRESENTATIVIDADE{' '}
-          <Text color="#340B77" as="span">
-            DA MULHER NOS ESPAÇOS DE PODER!
-          </Text>
+          <Text color="#340B77">DA MULHER NOS ESPAÇOS DE PODER!</Text>
         </Text>
       </Reveal>
     </Flex>

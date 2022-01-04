@@ -93,7 +93,7 @@ export default function ListUsers() {
       >
         <Flex align="center" justify="center" mx="auto">
           <Table color="white" mt="2rem" size="sm">
-            <Thead>
+            <Thead color="white">
               <Tr>
                 <Th color="white">Nome</Th>
                 <Th color="white">Email</Th>
@@ -241,7 +241,7 @@ export default function ListUsers() {
             ) : (
               faunaData.map(user => (
                 <Tbody>
-                  <Tr>
+                  <Tr color="white">
                     <Td>{user.data.name}</Td>
                     <Td>{user.data.email}</Td>
                     <Td>{user.data.whatsapp}</Td>

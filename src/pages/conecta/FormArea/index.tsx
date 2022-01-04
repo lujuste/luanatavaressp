@@ -178,8 +178,8 @@ export default function FormArea() {
           <Heading
             color="white"
             fontFamily="Public Sans"
-            fontSize={['32px', '32px', '50px', '60px']}
-            mt={['2rem', '2rem', '5rem']}
+            fontSize={['32px', '32px', '40px', '42px']}
+            mt={['2rem', '2rem', '3rem']}
             mx="auto"
             maxW="600px"
           >
