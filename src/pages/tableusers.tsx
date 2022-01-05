@@ -407,7 +407,6 @@ export default function ListUsers() {
             </Flex>
           </GridItem>
         </Grid>
-        <Grid mt="3rem" mx="auto" templateColumns="repeat(1, 1fr)"></Grid>
       </Flex>
       <Flex
         flexDir="column"
