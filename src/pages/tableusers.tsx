@@ -23,8 +23,6 @@ import {
   CircularProgressLabel,
 } from '@chakra-ui/react';
 
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -36,6 +34,7 @@ export default function ListUsers() {
   const [genrerBlackData, setGenrerBlackData] = useState(0);
   const [genrerYellowData, setGenrerYellowData] = useState(0);
   const [elections, setElections] = useState(0);
+  const [filiations, setFiliations] = useState(0);
 
   async function getData() {
     setLoading(true);
@@ -104,12 +103,31 @@ export default function ListUsers() {
   const percetualElectionsWomans = Math.round((elections * 100) / countData);
   console.log('percentual cadidatas:', percetualElectionsWomans);
 
+  const sumWomansBlack = percetualYellowWomans + percetualBlackWomans;
+
+  const restPercentual = (sumWomansBlack + percetualWhiteWomans - 100) * -1;
+  console.log(restPercentual);
+
+  async function getDataPartido() {
+    setLoading(true);
+    const { data } = await axios.get('/api/getPartido');
+    const countFiliations = await data.length;
+    console.log('quantidade de candidatas:', countFiliations);
+    setFiliations(countFiliations);
+    console.log('quantidade filiadas:', countFiliations);
+    setLoading(false);
+  }
+
+  const percetualFiliationsWomans = Math.round((filiations * 100) / countData);
+  console.log('percentual filiadas:', percetualFiliationsWomans);
+
   useEffect(() => {
     getData();
     getDataGenrer();
     getDataGenrerBlack();
     getDataGenrerYellow();
     getDataElections();
+    getDataPartido();
   }, []);
   //@ts-ignore
   console.log(faunaData);
@@ -139,7 +157,8 @@ export default function ListUsers() {
           <div>
             <Text
               borderRadius="10px"
-              p="3rem"
+              px="3rem"
+              py="1.5rem"
               bgColor="white"
               mt="1rem"
               mx="auto"
@@ -158,7 +177,12 @@ export default function ListUsers() {
               >
                 Mulheres cadastradas
               </Text>{' '}
-              <Text fontFamily="Raleway" fontSize="22px" color="black">
+              <Text
+                fontFamily="Raleway"
+                fontWeight="bold"
+                fontSize="22px"
+                color="black"
+              >
                 com sucesso!! ✅
               </Text>
             </Text>
@@ -237,7 +261,7 @@ export default function ListUsers() {
           </div> */}
         </Flex>
 
-        <Grid mt="2rem" mx="auto" gap={20} templateColumns="repeat(4, 1fr)">
+        <Grid mt="2rem" mx="auto" gap={10} templateColumns="repeat(4, 1fr)">
           <GridItem>
             <Flex flexDir="column" align="center" justify="center">
               <Text
@@ -268,20 +292,21 @@ export default function ListUsers() {
                 fontWeight="600"
                 fontFamily="Raleway"
               >
-                👱🏿‍♀️ Mulheres negras
+                👱🏿‍♀️ Mulheres pretas e pardas
               </Text>
               <CircularProgress
                 size="100px"
-                value={percetualBlackWomans}
+                value={sumWomansBlack}
                 color="pink.500"
               >
                 <CircularProgressLabel color="white">
                   {' '}
-                  {loading ? <Spinner /> : `${percetualBlackWomans}%`}{' '}
+                  {loading ? <Spinner /> : `${sumWomansBlack}%`}{' '}
                 </CircularProgressLabel>
               </CircularProgress>
             </Flex>
           </GridItem>
+
           <GridItem>
             <Flex flexDir="column" align="center" justify="center">
               <Text
@@ -289,21 +314,23 @@ export default function ListUsers() {
                 color="white"
                 fontWeight="600"
                 fontFamily="Raleway"
+                textAlign="center"
               >
-                👱🏽‍♀️ Mulheres pardas
+                ❌ Mulheres não opinaram cor
               </Text>
               <CircularProgress
                 size="100px"
-                value={percetualYellowWomans}
+                value={restPercentual}
                 color="pink.500"
               >
                 <CircularProgressLabel color="white">
                   {' '}
-                  {loading ? <Spinner /> : `${percetualYellowWomans}%`}{' '}
+                  {loading ? <Spinner /> : `${restPercentual}%`}{' '}
                 </CircularProgressLabel>
               </CircularProgress>
             </Flex>
           </GridItem>
+
           <GridItem>
             <Flex flexDir="column" align="center" justify="center">
               <Text
@@ -311,17 +338,42 @@ export default function ListUsers() {
                 color="white"
                 fontWeight="600"
                 fontFamily="Raleway"
+                textAlign="center"
               >
-                👩🏽‍🔧 Mulheres candidatas
+                👩🏽‍🔧 Mulheres que foram candidatas
               </Text>
               <CircularProgress
                 size="100px"
-                value={percetualYellowWomans}
+                value={percetualElectionsWomans}
                 color="pink.500"
               >
                 <CircularProgressLabel color="white">
                   {' '}
                   {loading ? <Spinner /> : `${percetualElectionsWomans}%`}{' '}
+                </CircularProgressLabel>
+              </CircularProgress>
+            </Flex>
+          </GridItem>
+
+          <GridItem>
+            <Flex flexDir="column" align="center" justify="center">
+              <Text
+                mb="1rem"
+                color="white"
+                fontWeight="600"
+                fontFamily="Raleway"
+                textAlign="center"
+              >
+                ➡️ Mulheres filiadas
+              </Text>
+              <CircularProgress
+                size="100px"
+                value={percetualFiliationsWomans}
+                color="pink.500"
+              >
+                <CircularProgressLabel color="white">
+                  {' '}
+                  {loading ? <Spinner /> : `${percetualFiliationsWomans}%`}{' '}
                 </CircularProgressLabel>
               </CircularProgress>
             </Flex>
@@ -336,7 +388,16 @@ export default function ListUsers() {
         h="100%"
         p="2rem"
       >
-        <Flex align="center" justify="center" mx="auto">
+        <Heading
+          mt="2rem"
+          fontWeight={'400'}
+          fontFamily={'Raleway'}
+          color="white"
+          mx="auto"
+        >
+          Lista de inscrições
+        </Heading>
+        <Flex flexDir="column" align="center" justify="center" mx="auto">
           <Table color="white" mt="2rem" size="sm">
             <Thead color="white">
               <Tr>
@@ -344,7 +405,7 @@ export default function ListUsers() {
                 <Th color="white">Email</Th>
                 <Th color="white">WhatsApp</Th>
                 <Th color="white">CPF</Th>
-                <Th color="white">Nascimento</Th>
+                <Th color="white">Onde mora</Th>
                 <Th color="white">Bairro</Th>
                 <Th color="white">Instagram</Th>
                 <Th color="white">Eleições</Th>
