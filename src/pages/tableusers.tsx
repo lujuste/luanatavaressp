@@ -23,6 +23,9 @@ import {
   CircularProgressLabel,
 } from '@chakra-ui/react';
 
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -131,6 +134,18 @@ export default function ListUsers() {
   }, []);
   //@ts-ignore
   console.log(faunaData);
+
+  const options = {
+    labels: ['Brancas', 'Pretas e Pardas', 'Não opinaram'],
+    style: {
+      colors: ['rgb(255, 255, 255)'],
+    },
+  };
+  const series = [
+    percetualWhiteWomans ? percetualWhiteWomans : 0,
+    sumWomansBlack ? sumWomansBlack : 0,
+    restPercentual ? restPercentual : 0,
+  ]; //our data
 
   return (
     <Flex
@@ -261,8 +276,8 @@ export default function ListUsers() {
           </div> */}
         </Flex>
 
-        <Grid mt="2rem" mx="auto" gap={10} templateColumns="repeat(4, 1fr)">
-          <GridItem>
+        <Grid mt="2rem" mx="auto" gap={10} templateColumns="repeat(3, 1fr)">
+          {/* <GridItem>
             <Flex flexDir="column" align="center" justify="center">
               <Text
                 mb="1rem"
@@ -329,7 +344,7 @@ export default function ListUsers() {
                 </CircularProgressLabel>
               </CircularProgress>
             </Flex>
-          </GridItem>
+          </GridItem> */}
 
           <GridItem>
             <Flex flexDir="column" align="center" justify="center">
@@ -378,7 +393,22 @@ export default function ListUsers() {
               </CircularProgress>
             </Flex>
           </GridItem>
+          <GridItem>
+            {' '}
+            {loading ? (
+              <Spinner color="pink.500" />
+            ) : (
+              <Chart
+                options={options}
+                series={series}
+                type="donut"
+                width="380"
+                colors={['#447b40', '#cc7870', '#e74ce4']}
+              />
+            )}{' '}
+          </GridItem>
         </Grid>
+        <Grid mt="3rem" mx="auto" templateColumns="repeat(1, 1fr)"></Grid>
       </Flex>
       <Flex
         flexDir="column"

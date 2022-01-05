@@ -47,6 +47,8 @@ export default class CustomDocument extends Document {
           <ColorModeScript />
           <Main />
           <NextScript />
+          <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+          <script src="https://cdn.jsdelivr.net/npm/react-apexcharts"></script>
         </body>
       </Html>
     );
