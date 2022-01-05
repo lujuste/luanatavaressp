@@ -345,6 +345,19 @@ export default function ListUsers() {
               </CircularProgress>
             </Flex>
           </GridItem> */}
+          <GridItem>
+            {' '}
+            {loading ? (
+              <Spinner color="pink.500" />
+            ) : (
+              <Chart
+                options={options}
+                series={series}
+                type="donut"
+                width="380"
+              />
+            )}{' '}
+          </GridItem>
 
           <GridItem>
             <Flex flexDir="column" align="center" justify="center">
@@ -392,20 +405,6 @@ export default function ListUsers() {
                 </CircularProgressLabel>
               </CircularProgress>
             </Flex>
-          </GridItem>
-          <GridItem>
-            {' '}
-            {loading ? (
-              <Spinner color="pink.500" />
-            ) : (
-              <Chart
-                options={options}
-                series={series}
-                type="donut"
-                width="380"
-                colors={['#447b40', '#cc7870', '#e74ce4']}
-              />
-            )}{' '}
           </GridItem>
         </Grid>
         <Grid mt="3rem" mx="auto" templateColumns="repeat(1, 1fr)"></Grid>
