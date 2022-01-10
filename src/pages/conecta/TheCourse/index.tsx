@@ -200,7 +200,7 @@ export default function TheCourse() {
           <strong>primeira </strong> turma contará com{' '}
           <strong>150 vagas</strong>. Caso queira participar,{' '}
           <strong>preencha o formulário abaixo</strong> e aguarde a conclusão do
-          processo de seleção <strong>até 11/01 </strong>por{' '}
+          processo de seleção <strong>até 14/01 </strong>por{' '}
           <strong>e-mail</strong>.
         </Text>
       </Reveal>
