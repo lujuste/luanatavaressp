@@ -168,21 +168,22 @@ export default function FormArea() {
         }}
         borderRadius={['0', '0', '10px']}
         flexDir="column"
-        boxShadow="dark-lg"
+        boxShadow="2xl"
         onSubmit={handleSubmit(onSubmit)}
       >
         {isMobile ? (
-          <Heading mt="3rem" color="white" mx="auto">
+          <Heading fontWeight="400" mt="3rem" color="white" mx="auto">
             ❌ Inscrições encerradas!
           </Heading>
         ) : (
           <Heading
             color="white"
             fontFamily="Public Sans"
-            fontSize={['32px', '32px', '40px', '42px']}
+            fontSize={['24px', '24px', '28px', '30px']}
             mt={['2rem', '3rem', '3rem']}
             mx="auto"
             maxW="600px"
+            fontWeight="400"
           >
             ❌ Inscrições encerradas!
           </Heading>
