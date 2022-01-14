@@ -148,7 +148,7 @@ export default function FormArea() {
 
   return (
     <Flex
-      pb="4rem"
+      pb={['4rem']}
       w="100%"
       h="100%"
       mx="auto"
@@ -158,36 +158,39 @@ export default function FormArea() {
       <Flex
         as="form"
         mx="auto"
-        w="1000px"
+        w="600px"
         h="100%"
-        pb="2rem"
+        px="5"
+        pb="3rem"
         bgColor="#912B78"
         sx={{
           filter: 'blur',
         }}
-        borderRadius={['0', '0', '28px']}
+        borderRadius={['0', '0', '10px']}
         flexDir="column"
         boxShadow="dark-lg"
         onSubmit={handleSubmit(onSubmit)}
       >
         {isMobile ? (
-          <Heading mt="2rem" color="white" mx="auto">
-            Inscreva-se!
+          <Heading mt="3rem" color="white" mx="auto">
+            ❌ Inscrições encerradas!
           </Heading>
         ) : (
           <Heading
             color="white"
             fontFamily="Public Sans"
             fontSize={['32px', '32px', '40px', '42px']}
-            mt={['2rem', '2rem', '3rem']}
+            mt={['2rem', '3rem', '3rem']}
             mx="auto"
             maxW="600px"
           >
-            Inscreva-se!
+            ❌ Inscrições encerradas!
           </Heading>
         )}
+      </Flex>
 
-        <Text mt="2rem" color="white" ml="2.3rem">
+      {/* 
+      <Text mt="2rem" color="white" ml="2.3rem">
           <Icon transform="rotate(90deg)" as={TriangleUpIcon} /> Dados
           cadastrais:
         </Text>
@@ -518,7 +521,7 @@ export default function FormArea() {
             </ModalFooter>
           </ModalContent>
         </Modal>
-      </Flex>
+      </Flex> */}
     </Flex>
   );
 }

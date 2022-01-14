@@ -215,7 +215,7 @@ export default function TheCourse() {
           mx="auto"
           lineHeight={['32px', '32px', '52px']}
           mb={['-2rem', '-1rem', '-1rem', '-2rem']}
-          mt={['3rem', '2rem', '2rem', '4rem']}
+          mt={['3rem', '5rem', '2rem', '4rem']}
         >
           VAMOS ACELERAR A REPRESENTATIVIDADE{' '}
           <Text color="#340B77">DA MULHER NOS ESPAÇOS DE PODER!</Text>
