@@ -568,17 +568,3 @@ export default function FormArea() {
     </>
   );
 }
-
-export const getStaticProps: GetStaticProps = async context => {
-  const prismic = getPrismicClient();
-
-  const response = await prismic.query([
-    Prismic.Predicates.at('document.type', 'subscribe'),
-  ]);
-
-  console.log('oque deu aqui?');
-
-  return {
-    props: {},
-  };
-};
