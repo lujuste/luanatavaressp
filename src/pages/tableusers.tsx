@@ -1,3 +1,4 @@
+//@ts-nocheck
 import {
   Flex,
   List,
@@ -21,13 +22,19 @@ import {
   TableCaption,
   CircularProgress,
   CircularProgressLabel,
+  FormControl,
+  FormLabel,
+  useFormControl,
 } from '@chakra-ui/react';
+
+import { Switch } from '@chakra-ui/react';
 
 import dynamic from 'next/dynamic';
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useFormControlContext } from '../contexts/OpenFormControl';
 
 export default function ListUsers() {
   const [loading, setLoading] = useState(false);
@@ -38,6 +45,8 @@ export default function ListUsers() {
   const [genrerYellowData, setGenrerYellowData] = useState(0);
   const [elections, setElections] = useState(0);
   const [filiations, setFiliations] = useState(0);
+
+  const { isOpenForm, setIsOpenForm } = useFormControlContext();
 
   async function getData() {
     setLoading(true);
@@ -425,6 +434,18 @@ export default function ListUsers() {
         >
           Lista de inscrições
         </Heading>
+
+        <FormControl display="flex" alignItems="center">
+          <FormLabel htmlFor="email-alerts" color="white" size="lg" mb="0">
+            Ativar inscrições?
+          </FormLabel>
+          <Switch
+            onChange={() => handleOpenForm}
+            isChecked={isOpenForm}
+            id="email-alerts"
+          />
+        </FormControl>
+
         <Flex flexDir="column" align="center" justify="center" mx="auto">
           <Table color="white" mt="2rem" size="sm">
             <Thead color="white">

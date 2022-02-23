@@ -6,12 +6,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import '../shared/styles/styles.scss';
+import { FormControlProvider } from '../contexts/OpenFormControl';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider resetCSS theme={theme}>
-      <ToastContainer />
-      <Component {...pageProps} />
+      <FormControlProvider>
+        <ToastContainer />
+        <Component {...pageProps} />
+      </FormControlProvider>
     </ChakraProvider>
   );
 }

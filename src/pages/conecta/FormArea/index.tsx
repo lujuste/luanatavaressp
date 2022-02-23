@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { Input } from '../../../shared/components/Form/Input';
 import {
   Flex,
@@ -24,6 +26,9 @@ import { FieldError } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { useState } from 'react';
 
+import Prismic from '@prismicio/client';
+import { GetStaticProps } from 'next';
+import { getPrismicClient } from '../../../services/prismic';
 import Reveal from 'react-reveal/Reveal';
 
 import {
@@ -35,6 +40,7 @@ import {
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
+import { useFormControlContext } from '../../../contexts/OpenFormControl';
 
 interface InputProps {
   name: string;
@@ -94,6 +100,8 @@ export default function FormArea() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const { isOpenForm, setIsOpenForm } = useFormControlContext();
+
   const {
     register,
     handleSubmit,
@@ -147,382 +155,430 @@ export default function FormArea() {
   };
 
   return (
-    <Flex
-      pb={['4rem']}
-      w="100%"
-      h="100%"
-      mx="auto"
-      justify="center"
-      bgColor="#E5E5E5"
-    >
+    <>
       <Flex
-        as="form"
-        mx="auto"
-        w="600px"
+        pb={['4rem']}
+        w="100%"
         h="100%"
-        px="5"
-        pb="3rem"
-        bgColor="#912B78"
-        sx={{
-          filter: 'blur',
-        }}
-        borderRadius={['0', '0', '10px']}
-        flexDir="column"
-        boxShadow="2xl"
-        onSubmit={handleSubmit(onSubmit)}
+        mx="auto"
+        justify="center"
+        bgColor="#E5E5E5"
       >
-        {isMobile ? (
-          <Heading fontWeight="400" mt="3rem" color="white" mx="auto">
-            ❌ Inscrições encerradas!
-          </Heading>
-        ) : (
-          <Heading
-            color="white"
-            fontFamily="Public Sans"
-            fontSize={['24px', '24px', '28px', '30px']}
-            mt={['2rem', '3rem', '3rem']}
+        {!isOpenForm && (
+          <Flex
+            as="form"
             mx="auto"
             maxW="600px"
-            fontWeight="400"
+            h="100%"
+            px="5"
+            pb="3rem"
+            bgColor="#912B78"
+            sx={{
+              filter: 'blur',
+            }}
+            borderRadius={['0', '0', '10px']}
+            flexDir="column"
+            boxShadow="2xl"
+            onSubmit={handleSubmit(onSubmit)}
           >
-            ❌ Inscrições encerradas!
-          </Heading>
+            {isMobile ? (
+              <Heading fontWeight="400" mt="3rem" color="white" mx="auto">
+                ❌ Inscrições encerradas!
+              </Heading>
+            ) : (
+              <Heading
+                color="white"
+                fontFamily="Public Sans"
+                fontSize={['24px', '24px', '28px', '30px']}
+                mt={['2rem', '3rem', '3rem']}
+                mx="auto"
+                maxW="600px"
+                fontWeight="400"
+              >
+                ❌ Inscrições encerradas!
+              </Heading>
+            )}
+          </Flex>
+        )}
+
+        {isOpenForm && (
+          <>
+            <Flex
+              as="form"
+              mx="auto"
+              w="100%"
+              maxW="990px"
+              h="100%"
+              px="5"
+              pb="3rem"
+              bgColor="#912B78"
+              sx={{
+                filter: 'blur',
+              }}
+              borderRadius={['0', '0', '10px']}
+              flexDir="column"
+              boxShadow="2xl"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <Text mt="2rem" color="white" ml="2.3rem">
+                <Icon transform="rotate(90deg)" as={TriangleUpIcon} /> Dados
+                cadastrais:
+              </Text>
+
+              <Grid
+                mt="2rem"
+                px={['2rem']}
+                templateColumns={[
+                  'repeat(1, 1fr)',
+                  'repeat(2, 1fr)',
+                  'repeat(2, 1fr)',
+                ]}
+                gap={4}
+              >
+                <GridItem>
+                  <Input
+                    name="name"
+                    label="Seu nome"
+                    {...register('name')}
+                    error={errors.name}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+                <GridItem>
+                  <Input
+                    name="email"
+                    label="Seu email"
+                    {...register('email')}
+                    error={errors.email}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+                <GridItem>
+                  <Input
+                    name="number"
+                    label="Seu WhatsApp"
+                    {...register('whatsapp')}
+                    error={errors.whatsapp}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+                <GridItem>
+                  <Input
+                    name="number"
+                    label="Seu CPF"
+                    {...register('cpf')}
+                    error={errors.cpf}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+                <GridItem>
+                  <Input
+                    name="text"
+                    label="Data de nascimento"
+                    {...register('dateIsBorn')}
+                    error={errors.dateIsBorn}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+                <GridItem>
+                  <Input
+                    name="text"
+                    {...register('cidade')}
+                    label="Sua cidade"
+                    error={errors.cidade}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+                <GridItem>
+                  <Input
+                    name="text"
+                    label="Seu bairro"
+                    {...register('bairro')}
+                    error={errors.bairro}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+                <GridItem>
+                  <Input
+                    name="text"
+                    label="Seu instagram"
+                    {...register('instagram')}
+                    error={errors.instagram}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+              </Grid>
+              <Text mt="2rem" color="white" ml="2.3rem">
+                <Icon transform="rotate(90deg)" as={TriangleUpIcon} />{' '}
+                Informações gerais:
+              </Text>
+              <Grid px="2rem" templateColumns="repeat(1, fr)" mt="1rem">
+                <GridItem mt="1rem">
+                  <Select
+                    name="eleicoes"
+                    id="eleicoes"
+                    color="black"
+                    {...register('eleicoes')}
+                    error={errors.eleicoes}
+                    bgColor="white"
+                    placeholder="Já disputou eleições?"
+                  >
+                    <option value="yes">Sim</option>
+                    <option value="no">Não</option>
+                  </Select>
+                </GridItem>
+                <GridItem>
+                  <Input
+                    mt="1rem"
+                    name="text"
+                    label="Se sim, qual ano?"
+                    {...register('anodisputado')}
+                    error={errors.anodisputado}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+                <GridItem>
+                  <Input
+                    mt="1rem"
+                    name="cargodisputado"
+                    label="Se sim, qual cargo?"
+                    {...register('cargodisputado')}
+                    error={errors.cargodisputado}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+                <GridItem>
+                  <Input
+                    mt="1rem"
+                    name="partido"
+                    label="Se sim, qual partido?"
+                    {...register('partidodisputado')}
+                    error={errors.partidodisputado}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+                <GridItem mt="1rem">
+                  <Select
+                    id="lider"
+                    name="lider"
+                    color="black"
+                    bgColor="white"
+                    placeholder="É lider comunitária ou dirigente?"
+                    {...register('lider')}
+                    error={errors.lider}
+                  >
+                    <option value="yes">Sim</option>
+                    <option value="no">Não</option>
+                  </Select>
+                </GridItem>
+                <GridItem>
+                  <Input
+                    mt="1rem"
+                    name="text"
+                    label="Se sim, qual organização?"
+                    {...register('organization')}
+                    error={errors.organization}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+                <GridItem mt="1rem">
+                  <Select
+                    name="candidato"
+                    id="candidato"
+                    {...register('candidato')}
+                    error={errors.candidato}
+                    color="black"
+                    bgColor="white"
+                    placeholder="Pretende disputar as eleições?"
+                  >
+                    <option value="yes">Sim</option>
+                    <option value="no">Não</option>
+                  </Select>
+                </GridItem>
+                <GridItem>
+                  <Input
+                    mt="1rem"
+                    name="text"
+                    label="Se sim, qual cargo?"
+                    {...register('cargo')}
+                    error={errors.cargo}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+                <GridItem mt="1rem">
+                  <Select
+                    name="filiada"
+                    id="filiada"
+                    {...register('filiada')}
+                    error={errors.filiada}
+                    color="black"
+                    bgColor="white"
+                    placeholder="É filiada a algum partido?"
+                  >
+                    <option value="yes">Sim</option>
+                    <option value="no">Não</option>
+                  </Select>
+                </GridItem>
+
+                <GridItem>
+                  <Input
+                    mt="1rem"
+                    name="partido"
+                    label="Se sim, qual partido?"
+                    {...register('partido')}
+                    error={errors.partido}
+                    _hover={{ bgColor: 'white' }}
+                  />
+                </GridItem>
+
+                <GridItem mt="1rem">
+                  <Select
+                    id="cor"
+                    name="cor"
+                    color="black"
+                    bgColor="white"
+                    placeholder="Considera-se:"
+                    {...register('cor')}
+                    error={errors.cor}
+                  >
+                    <option value="branca">Branca</option>
+                    <option value="parda">Parda</option>
+                    <option value="preta">Preta</option>
+                    <option value="amarela">Amarela</option>
+                    <option value="indígena">Indígena</option>
+                  </Select>
+                </GridItem>
+
+                <GridItem mt="1rem">
+                  <Select
+                    id="genero"
+                    name="genero"
+                    color="black"
+                    bgColor="white"
+                    {...register('genero')}
+                    error={errors.genero}
+                    placeholder="Identidade de gênero:"
+                  >
+                    <option value="cisgenero">Cisgênero</option>
+                    <option value="transgenero">Transgênero</option>
+                    <option value="queer">Queer (não-binário)</option>
+                  </Select>
+                </GridItem>
+                <Checkbox {...register('lgpd')} mt={['0.5rem', '1rem', '2rem']}>
+                  <Text mt={['1rem', '1rem', 0]} ml="0.1rem" color="white">
+                    Ao informar meus dados, eu concordo com a Política de
+                    Privacidade - LGPD.
+                  </Text>
+                </Checkbox>
+              </Grid>
+              <Button
+                mt="1.5rem"
+                mx="auto"
+                color="white"
+                bgColor="#340B77"
+                w="193px"
+                h="54px"
+                type="submit"
+                border="solid 1px white"
+                _hover={{
+                  color: '#912B78',
+                  bgColor: 'white',
+                  border: 'solid 1px #340B77 ',
+                }}
+              >
+                {loading ? <Spinner /> : 'Enviar!'}
+              </Button>
+            </Flex>
+            <Flex>
+              <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent
+                  py="2rem"
+                  color="white"
+                  bgColor="#340B77"
+                  maxW="600px"
+                  w="100%"
+                  h={['600px', '800px', '600px', '500px']}
+                  mx={['1rem', '1rem', 'auto']}
+                >
+                  <ModalHeader
+                    fontFamily="Public Sans"
+                    fontSize="32px"
+                    mt="3rem"
+                    mx="auto"
+                  >
+                    <Flex align="center" mt="-4rem" flexDir="column">
+                      <Icon
+                        color="#912B78"
+                        boxSize="70px"
+                        as={CheckCircleIcon}
+                      />
+                      <Text bgColor="#912B78" px="2rem" mt="2rem">
+                        Parabéns!
+                      </Text>
+                    </Flex>
+                  </ModalHeader>
+                  <ModalCloseButton align="center" />
+                  <ModalBody>
+                    <Text px="2rem" fontFamily="Roboto" textAlign="center">
+                      Você concluiu a sua inscrição no processo de seleção da
+                      primeira turma da <strong>CONECTA.</strong> Nosso time
+                      fará uma avaliação dos critérios de participação e entrará
+                      em contato com você até
+                      <strong>
+                        {' '}
+                        11/01/2022 para confirmar a sua participação.
+                        <br />
+                      </strong>{' '}
+                      <Text
+                        fontWeight="700"
+                        mx="auto"
+                        maxW="320px"
+                        fontFamily="Public Sans"
+                        mt="1rem"
+                        fontSize="20px"
+                      >
+                        Lugar de mulher é onde ela quiser,{' '}
+                        <strong>
+                          {' '}
+                          <Text
+                            bgColor="#912B78"
+                            px="2"
+                            color="white"
+                            as="span"
+                          >
+                            inclusive na política!
+                          </Text>{' '}
+                        </strong>
+                      </Text>
+                    </Text>
+                  </ModalBody>
+
+                  <ModalFooter>
+                    <Button bgColor="#912B78" mr={3} onClick={onClose}>
+                      Voltar
+                    </Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </Flex>
+          </>
         )}
       </Flex>
-
-      {/* 
-      <Text mt="2rem" color="white" ml="2.3rem">
-          <Icon transform="rotate(90deg)" as={TriangleUpIcon} /> Dados
-          cadastrais:
-        </Text>
-
-        <Grid
-          mt="2rem"
-          px={['2rem']}
-          templateColumns={[
-            'repeat(1, 1fr)',
-            'repeat(2, 1fr)',
-            'repeat(2, 1fr)',
-          ]}
-          gap={4}
-        >
-          <GridItem>
-            <Input
-              name="name"
-              label="Seu nome"
-              {...register('name')}
-              error={errors.name}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-          <GridItem>
-            <Input
-              name="email"
-              label="Seu email"
-              {...register('email')}
-              error={errors.email}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-          <GridItem>
-            <Input
-              name="number"
-              label="Seu WhatsApp"
-              {...register('whatsapp')}
-              error={errors.whatsapp}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-          <GridItem>
-            <Input
-              name="number"
-              label="Seu CPF"
-              {...register('cpf')}
-              error={errors.cpf}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-          <GridItem>
-            <Input
-              name="text"
-              label="Data de nascimento"
-              {...register('dateIsBorn')}
-              error={errors.dateIsBorn}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-          <GridItem>
-            <Input
-              name="text"
-              {...register('cidade')}
-              label="Sua cidade"
-              error={errors.cidade}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-          <GridItem>
-            <Input
-              name="text"
-              label="Seu bairro"
-              {...register('bairro')}
-              error={errors.bairro}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-          <GridItem>
-            <Input
-              name="text"
-              label="Seu instagram"
-              {...register('instagram')}
-              error={errors.instagram}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-        </Grid>
-        <Text mt="2rem" color="white" ml="2.3rem">
-          <Icon transform="rotate(90deg)" as={TriangleUpIcon} /> Informações
-          gerais:
-        </Text>
-        <Grid px="2rem" templateColumns="repeat(1, fr)" mt="1rem">
-          <GridItem mt="1rem">
-            <Select
-              name="eleicoes"
-              id="eleicoes"
-              color="black"
-              {...register('eleicoes')}
-              error={errors.eleicoes}
-              bgColor="white"
-              placeholder="Já disputou eleições?"
-            >
-              <option value="yes">Sim</option>
-              <option value="no">Não</option>
-            </Select>
-          </GridItem>
-          <GridItem>
-            <Input
-              mt="1rem"
-              name="text"
-              label="Se sim, qual ano?"
-              {...register('anodisputado')}
-              error={errors.anodisputado}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-          <GridItem>
-            <Input
-              mt="1rem"
-              name="cargodisputado"
-              label="Se sim, qual cargo?"
-              {...register('cargodisputado')}
-              error={errors.cargodisputado}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-          <GridItem>
-            <Input
-              mt="1rem"
-              name="partido"
-              label="Se sim, qual partido?"
-              {...register('partidodisputado')}
-              error={errors.partidodisputado}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-          <GridItem mt="1rem">
-            <Select
-              id="lider"
-              name="lider"
-              color="black"
-              bgColor="white"
-              placeholder="É lider comunitária ou dirigente?"
-              {...register('lider')}
-              error={errors.lider}
-            >
-              <option value="yes">Sim</option>
-              <option value="no">Não</option>
-            </Select>
-          </GridItem>
-          <GridItem>
-            <Input
-              mt="1rem"
-              name="text"
-              label="Se sim, qual organização?"
-              {...register('organization')}
-              error={errors.organization}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-          <GridItem mt="1rem">
-            <Select
-              name="candidato"
-              id="candidato"
-              {...register('candidato')}
-              error={errors.candidato}
-              color="black"
-              bgColor="white"
-              placeholder="Pretende disputar as eleições?"
-            >
-              <option value="yes">Sim</option>
-              <option value="no">Não</option>
-            </Select>
-          </GridItem>
-          <GridItem>
-            <Input
-              mt="1rem"
-              name="text"
-              label="Se sim, qual cargo?"
-              {...register('cargo')}
-              error={errors.cargo}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-          <GridItem mt="1rem">
-            <Select
-              name="filiada"
-              id="filiada"
-              {...register('filiada')}
-              error={errors.filiada}
-              color="black"
-              bgColor="white"
-              placeholder="É filiada a algum partido?"
-            >
-              <option value="yes">Sim</option>
-              <option value="no">Não</option>
-            </Select>
-          </GridItem>
-
-          <GridItem>
-            <Input
-              mt="1rem"
-              name="partido"
-              label="Se sim, qual partido?"
-              {...register('partido')}
-              error={errors.partido}
-              _hover={{ bgColor: 'white' }}
-            />
-          </GridItem>
-
-          <GridItem mt="1rem">
-            <Select
-              id="cor"
-              name="cor"
-              color="black"
-              bgColor="white"
-              placeholder="Considera-se:"
-              {...register('cor')}
-              error={errors.cor}
-            >
-              <option value="branca">Branca</option>
-              <option value="parda">Parda</option>
-              <option value="preta">Preta</option>
-              <option value="amarela">Amarela</option>
-              <option value="indígena">Indígena</option>
-            </Select>
-          </GridItem>
-
-          <GridItem mt="1rem">
-            <Select
-              id="genero"
-              name="genero"
-              color="black"
-              bgColor="white"
-              {...register('genero')}
-              error={errors.genero}
-              placeholder="Identidade de gênero:"
-            >
-              <option value="cisgenero">Cisgênero</option>
-              <option value="transgenero">Transgênero</option>
-              <option value="queer">Queer (não-binário)</option>
-            </Select>
-          </GridItem>
-          <Checkbox {...register('lgpd')} mt={['0.5rem', '1rem', '2rem']}>
-            <Text mt={['1rem', '1rem', 0]} ml="0.1rem" color="white">
-              Ao informar meus dados, eu concordo com a Política de Privacidade
-              - LGPD.
-            </Text>
-          </Checkbox>
-        </Grid>
-        <Button
-          mt="1.5rem"
-          mx="auto"
-          color="white"
-          bgColor="#340B77"
-          w="193px"
-          h="54px"
-          type="submit"
-          border="solid 1px white"
-          _hover={{
-            color: '#912B78',
-            bgColor: 'white',
-            border: 'solid 1px #340B77 ',
-          }}
-        >
-          {loading ? <Spinner /> : 'Enviar!'}
-        </Button>
-      </Flex>
-
-      <Flex>
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent
-            py="2rem"
-            color="white"
-            bgColor="#340B77"
-            maxW="600px"
-            w="100%"
-            h={['600px', '800px', '600px', '500px']}
-            mx={['1rem', '1rem', 'auto']}
-          >
-            <ModalHeader
-              fontFamily="Public Sans"
-              fontSize="32px"
-              mt="3rem"
-              mx="auto"
-            >
-              <Flex align="center" mt="-4rem" flexDir="column">
-                <Icon color="#912B78" boxSize="70px" as={CheckCircleIcon} />
-                <Text bgColor="#912B78" px="2rem" mt="2rem">
-                  Parabéns!
-                </Text>
-              </Flex>
-            </ModalHeader>
-            <ModalCloseButton align="center" />
-            <ModalBody>
-              <Text px="2rem" fontFamily="Roboto" textAlign="center">
-                Você concluiu a sua inscrição no processo de seleção da primeira
-                turma da <strong>CONECTA.</strong> Nosso time fará uma avaliação
-                dos critérios de participação e entrará em contato com você até
-                <strong>
-                  {' '}
-                  11/01/2022 para confirmar a sua participação. <br />
-                </strong>{' '}
-                <Text
-                  fontWeight="700"
-                  mx="auto"
-                  maxW="320px"
-                  fontFamily="Public Sans"
-                  mt="1rem"
-                  fontSize="20px"
-                >
-                  Lugar de mulher é onde ela quiser,{' '}
-                  <strong>
-                    {' '}
-                    <Text bgColor="#912B78" px="2" color="white" as="span">
-                      inclusive na política!
-                    </Text>{' '}
-                  </strong>
-                </Text>
-              </Text>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button bgColor="#912B78" mr={3} onClick={onClose}>
-                Voltar
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </Flex> */}
-    </Flex>
+    </>
   );
 }
+
+export const getStaticProps: GetStaticProps = async context => {
+  const prismic = getPrismicClient();
+
+  const response = await prismic.query([
+    Prismic.Predicates.at('document.type', 'subscribe'),
+  ]);
+
+  console.log('oque deu aqui?');
+
+  return {
+    props: {},
+  };
+};
