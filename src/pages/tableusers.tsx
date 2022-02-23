@@ -439,11 +439,7 @@ export default function ListUsers() {
           <FormLabel htmlFor="email-alerts" color="white" size="lg" mb="0">
             Ativar inscrições?
           </FormLabel>
-          <Switch
-            onChange={() => handleOpenForm}
-            isChecked={isOpenForm}
-            id="email-alerts"
-          />
+          <Switch isChecked={isOpenForm} id="email-alerts" />
         </FormControl>
 
         <Flex flexDir="column" align="center" justify="center" mx="auto">
